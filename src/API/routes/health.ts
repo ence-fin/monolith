@@ -1,4 +1,5 @@
 import {isServiceHealthy} from '../../utils/health'
+import {FastifyInstance, RouteShorthandOptions} from 'fastify'
 
 const health = {
   response: {
@@ -19,7 +20,7 @@ const health = {
   }
 }
 
-async function route(fastify, options) {
+async function route(fastify: FastifyInstance, options: RouteShorthandOptions) {
   fastify.route({
     method: 'GET',
     url: '/health',
@@ -30,7 +31,7 @@ async function route(fastify, options) {
       return {
         healthy,
         service: 'ence',
-        version: options.version || 'any'
+        version: options.version ?? 'any'
       }
     }
   })
