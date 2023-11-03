@@ -20,7 +20,7 @@ fastify.register(cors, corsConfig)
 fastify
   .listen({port: config.PORT, host: config.HOST})
   .then(address => {
-    console.info(`⚡Ence server running at ${address}⚡`)
+    console.info(`⚡Ence server running at ${address}`)
     fastify.server.keepAliveTimeout = config.KEEP_ALIVE_TIMEOUT
     fastify.server.headersTimeout = config.HEADERS_TIMEOUT
   })
