@@ -2,4 +2,4 @@
 
 import MainDB from './main'
 
-export { MainDB as Main }
+export {MainDB as Main}

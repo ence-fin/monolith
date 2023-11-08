@@ -1,0 +1,16 @@
+const Constants = {} as Record<string, any>
+
+Constants.REDIS = {}
+Constants.REDIS.ACCESS_TOKEN_PREFIX = ':at'
+Constants.REDIS.ACCESS_TOKEN_FIRST_TIME_TTL = 3 * 3600
+Constants.REDIS.ACCESS_TOKEN_DEFAULT_AFTER_LOGIN_TTL = 3 * 3600
+
+Constants.HTTP_CODES = {}
+Constants.HTTP_CODES.SUCCESS = 200
+Constants.HTTP_CODES.BAD_REQUEST = 400
+Constants.HTTP_CODES.UNAUTHORIZED = 401
+Constants.HTTP_CODES.FORBIDDEN = 403
+Constants.HTTP_CODES.NOT_FOUND = 404
+Constants.HTTP_CODES.INTERNAL_SERVER_ERROR = 500
+
+export default Constants
