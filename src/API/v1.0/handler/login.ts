@@ -2,10 +2,10 @@ import {loginWithGoogleService} from '../service/login'
 
 async function loginWithGoogleHandler(request: any, reply: any) {
   const googleAuthToken = request.body.authToken
-  const state = request.body.state
-  const accessToken = request.accessToken
+  const idToken = request.body.id_token
+  const accessToken = request.body.accessToken
 
-  const googleService = await loginWithGoogleService(googleAuthToken, state, accessToken)
+  const googleService = await loginWithGoogleService(googleAuthToken, accessToken, idToken)
   console.log(googleService)
 }
 

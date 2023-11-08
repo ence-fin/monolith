@@ -13,5 +13,4 @@ const loginWithGoogleValidator = {
     }
   }
 }
-
 export {loginWithGoogleValidator}

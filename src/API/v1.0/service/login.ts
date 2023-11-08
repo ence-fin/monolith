@@ -4,43 +4,47 @@ import Constants from '../../../utils/constants'
 import Invite from '../../../utils/invite'
 import GoogleOAuth from '../../../utils/oauth/google'
 
-async function loginWithGoogleService(googleAuthToken: any, _accessToken: any, state: any) {
+async function loginWithGoogleService(googleAuthToken: any, _accessToken: any, idToken: any) {
   let accessToken = _accessToken
   let nextUrl = null
-  const decodedState = Invite.decodeSignature(state)
-  console.log('DECODED STATE', decodedState)
+  const decodedIdToken = await Invite.decodeSignature(idToken)
+  console.log('[DECODED]', decodedIdToken)
 
-  if (!decodedState) {
-    throw new Error('Invalid state')
+  if (!decodedIdToken) {
+    throw new Error('Invalid idToken')
   }
 
-  if (state && decodedState.status === 'VALID') {
+  if (decodedIdToken && decodedIdToken.status === 'VALID') {
     try {
-      nextUrl = JSON.parse(Buffer.from(state, 'base64').toString('utf-8'))
+      //@ts-ignore
+      nextUrl = decodedIdToken.payload.payload.sub
     } catch (err) {
-      console.error('Error while parsing state', err)
+      console.error('Error while parsing idToken', err)
     }
   }
 
-  if (decodedState.status === 'EXPIRED') {
+  if (decodedIdToken.status === 'EXPIRED') {
     console.error('Invite code expired', Constants.HTTP_CODES.BAD_REQUEST)
   }
 
-  if (!_accessToken) {
-    accessToken = createNewToken()
-    await Repo.User.saveNewAccessToken(accessToken)
-  }
+  // if (!_accessToken) {
+  //   console.log('running?')
+  //   accessToken = createNewToken()
+  //   await Repo.User.saveNewAccessToken(accessToken) //TODO: OPEN after check
+  // }
 
-  const accessTokenUserData = await Repo.User.getAccessTokenData(accessToken)
+  // const accessTokenUserData = await Repo.User.getAccessTokenData(accessToken)
 
-  if (accessTokenUserData && ![-1, 0].includes(accessTokenUserData.userId)) {
-    console.error('acess token already logged in', Constants.HTTP_CODES.FORBIDDEN)
-  }
+  // if (accessTokenUserData && ![-1, 0].includes(accessTokenUserData.userId)) {
+  //   console.error('access token already logged in', Constants.HTTP_CODES.FORBIDDEN)
+  // }
 
   const userData = await GoogleOAuth.getUserData(googleAuthToken).catch(error => {
     console.error('unable to get user data from Google', error)
     console.error('unable to get user data from Google', Constants.HTTP_CODES.INTERNAL_SERVER_ERROR)
   })
+
+  const googleUserIdentifier = userData.sub
 }
 
 export {loginWithGoogleService}

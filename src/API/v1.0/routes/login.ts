@@ -5,7 +5,9 @@ async function loginRoutes(fastify: any) {
   fastify.route({
     method: 'POST',
     url: '/login/google',
-    schema: loginWithGoogleValidator,
+    // schema: loginWithGoogleValidator,
     handler: loginWithGoogleHandler
   })
 }
+
+export default loginRoutes

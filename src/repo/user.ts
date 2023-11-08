@@ -10,7 +10,7 @@ class UserRepo {
 
   static async getAccessTokenData(accessToken: any) {
     const key = `${Constants.REDIS.ACCESS_TOKEN_PREFIX}${accessToken}`
-    const value = await Cache.Main.getKeyValue(key)
+    const value = (await Cache.Main.getKeyValue(key)) ?? '{}'
     return value ? JSON.parse(value) : null
   }
 

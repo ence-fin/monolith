@@ -1,10 +1,12 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-const jwtConfig = {
-  USER_INVITE_SIGNING_SECRET: string
+interface JwtConfig {
+  USER_INVITE_SIGNING_SECRET: any
 }
 
-jwtConfig.USER_INVITE_SIGNING_SECRET = process.env.USER_INVITE_SIGNING_SECRET
+const jwtConfig: JwtConfig = {
+  USER_INVITE_SIGNING_SECRET: process.env.USER_INVITE_SIGNING_SECRET!
+}
 
 export default jwtConfig

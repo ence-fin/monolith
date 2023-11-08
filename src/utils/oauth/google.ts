@@ -2,6 +2,7 @@ import axios, {AxiosError, AxiosResponse} from 'axios'
 import {URLSearchParams} from 'url'
 import {oauth} from '../../config/google'
 import {v4 as uuidv4} from 'uuid'
+import customConsole from './console'
 
 const GOOGLE_OAUTH_TOKEN_URL = 'https://oauth2.googleapis.com/token'
 
@@ -18,7 +19,7 @@ class GoogleOAuth {
           grant_type: oauth.GRANT_TYPE
         })
       )
-
+      customConsole.log('in ouath ---->', response.data)
       return response.data
     } catch (error) {
       if (axios.isAxiosError(error)) {
